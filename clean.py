@@ -26,6 +26,11 @@ def deal_salary(text):
     if not numbers:
         return None, None, unit
 
+    if unit == "USD" and max(numbers) > 10000:
+        unit = "VND"
+    if unit == "VND" and max(numbers) > 1000:
+        return None, None, unit
+
     # Case: có "tới"/"up to"/"đến" -> chỉ có max
     if "tới" in text_lower or "up to" in text_lower or "đến" in text_lower:
         return None, numbers[0], unit
@@ -135,4 +140,3 @@ if __name__ == "__main__":
 
     df.to_csv("data_clean.csv", index=False, encoding="utf-8-sig")
     print("Saved to data_clean.csv")
-
